@@ -1,3 +1,4 @@
+import 'package:currency_converter/currency_converter_material_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,11 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Scaffold(
-        body: Center(
-          child: Text('Paranietharan'),
-        ),
-      ),
+      home: const CurrencyConverterMaterialPage(),
     );
   }
 }
