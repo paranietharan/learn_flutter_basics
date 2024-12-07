@@ -14,10 +14,29 @@ class _HomePageState extends State<HomePage> {
   final DatabaseService _databaseService = DatabaseService.instance;
 
   String? _task = null;
+  late Future<List<Task>> _tasksFuture; // State variable for Future
+
+  @override
+  void initState() {
+    super.initState();
+    _tasksFuture = _databaseService.getTasks(); // Initialize Future
+  }
+
+  void _refreshTasks() {
+    setState(() {
+      _tasksFuture = _databaseService.getTasks(); // Update Future
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Todo List",
+          textAlign: TextAlign.center,
+          ),
+      ),
       floatingActionButton: _addTaskButton(),
       body: _tasksList(),
     );
@@ -80,6 +99,12 @@ class _HomePageState extends State<HomePage> {
                   title: Text(
                     task.content,
                   ),
+                  trailing: Checkbox(
+                    value: task.status == 1, 
+                    onChanged: (value) {
+                      _databaseService.UpdateTaskStatus(task.id, value == true ? 1 : 0);
+                      _refreshTasks();
+                    }),
                 );
               });
         });

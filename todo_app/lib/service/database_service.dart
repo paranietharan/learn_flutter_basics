@@ -65,4 +65,17 @@ class DatabaseService {
             ))
         .toList();
   }
+
+  // ignore: non_constant_identifier_names
+  void UpdateTaskStatus(int id, int status) async {
+    final db = await database;
+    await db.update(
+      _taskTableName,
+      {_taskStatusColumnName: status},
+      where: 'id = ?',
+      whereArgs: [
+        id,
+      ],
+    );
+  }
 }
